@@ -9,7 +9,7 @@ Si se prefiere, se puede crear un entorno virtual para las dependencias:
 ```bash
 # Se realiza antes de instalar librerías
 
-py -m venv env # python -m venv env
+py -m venv env # python -m venv env (solo la primera vez para generar entorno virtual)
 .\env\Scripts\Activate.bat # Para iniciar el entorno virtual
 ```
 
