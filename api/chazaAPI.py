@@ -39,14 +39,14 @@ def id(id=None):
     else:
         return 'La chaza no existe'
 
-#Obtenes y filtrar info resumida de las chazas pertenecientes a una categoria (ej: /chaza/?categoria=Comida)
+#Obtener y filtrar info resumida de las chazas pertenecientes a una categoria (ej: /chaza/?categoria=Comida)
 @chazaAPI.route('/', methods=['GET'])
 def category():
     category = request.args.get('categoria')
     chaza_ref = db.collection('chaza')
 
     try:
-        category_chazas = [summarizeChaza(chaza_doc) for chaza_doc in chaza_ref.where('categoria', '==', category).stream()]
+        category_chazas = [summarizeChaza(chaza_doc) for chaza_doc in chaza_ref.where('categorias', 'array_contains', category).stream()]
         return jsonify(category_chazas), 200
 
     except Exception as e:

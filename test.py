@@ -3,7 +3,7 @@ import requests
 url = "http://127.0.0.1:5000/chaza/add"
 myobj = {
     "nombre": "Chaza4",
-    "categoria": "Vivero",
+    "categorias": ["Vivero"],
     "ubicacion": "Perola",
     "descripcion": "",
     "urlImagen": "urltest4.com",
