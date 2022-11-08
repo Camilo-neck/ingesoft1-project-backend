@@ -39,18 +39,34 @@ def id(id=None):
     else:
         return 'La chaza no existe'
 
-#Obtener y filtrar info resumida de las chazas pertenecientes a una categoria (ej: /chaza/?categoria=Comida)
+#Obtener y filtrar info resumida de las chazas por categoria y/o nombre
+#(ej: /chaza/?categoria=Comida  |  /chaza/?nombre=Chaza1  |  /chaza/?categoria=Comida&nombre=Chaza3)
 @chazaAPI.route('/', methods=['GET'])
-def category():
+def search():
     category = request.args.get('categoria')
+    if category is None: category = "Todas"
+
+    name = request.args.get('nombre')
+
     chaza_ref = db.collection('chaza')
 
     try:
-        category_chazas = [summarizeChaza(chaza_doc) for chaza_doc in chaza_ref.where('categorias', 'array_contains', category).stream()]
+        category_chazas = categoryQuery(chaza_ref,category,name)
         return jsonify(category_chazas), 200
 
     except Exception as e:
         return f"An error has ocurred: {e}"
+
+def categoryQuery(chaza_ref,category,name):
+    if category == "Todas":
+        if name != None:
+            return [summarizeChaza(chaza_doc) for chaza_doc in chaza_ref.where('nombre', '==', name).stream()]
+        return [summarizeChaza(chaza_doc) for chaza_doc in chaza_ref.stream()]
+
+    if name != None:
+        return [summarizeChaza(chaza_doc) for chaza_doc in chaza_ref.where('categorias', 'array_contains', category).where('nombre', '==', name).stream()]
+    return [summarizeChaza(chaza_doc) for chaza_doc in chaza_ref.where('categorias', 'array_contains', category).stream()]
+    
 
 #Retornar diccionario resumido de una chaza (para las categorias)
 def summarizeChaza(chaza_doc):
@@ -59,5 +75,6 @@ def summarizeChaza(chaza_doc):
         "id" : chaza_doc.id,
         "nombre" : chaza["nombre"],
         "urlImagen" : chaza["urlImagen"],
-        "calificacion" : chaza["calificacion"]
+        "calificacion" : chaza["calificacion"],
+        "categorias" : chaza["categorias"]
     }
