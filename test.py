@@ -73,5 +73,16 @@ def createReport():
     print(r.text)  # Get success or error message
 
 
+def getReportSummary(id):
+    '''Get JSON object summary from a given report id
+    
+    Args:
+        id: Firestone comment id
+    '''
+    url = 'http://localhost:5000/reporte/' + str(id)
+
+    r = requests.get(url)
+    print(r.text)
+
 '''Code execution section'''
-createReport()
+getReportSummary('21190da6fccd4671b2675b60774d4c1f')
