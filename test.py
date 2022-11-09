@@ -1,6 +1,13 @@
 import requests
 
-url = "http://127.0.0.1:5000/comentario/add"
+url = "http://127.0.0.1:5000/comentario/increaseUpvotes/00e985c559724472be71d415b78b252b"
+
+r = requests.post(url)
+print(r.text)
+
+
+
+
 # myobj = {
 #     "nombre": "Chaza5",
 #     "categorias": ["Vivero"],
@@ -16,19 +23,23 @@ url = "http://127.0.0.1:5000/comentario/add"
 #     "reportes": ["rep1"],
 # }
 
-myComment = {
-    'usuario': 'idUsuario',
-    'fecha': 'nov 10 2020',
-    'estrellas': 'comentario1',
-    'upvotes': '1',
-    'chazaId': '23131'
-}
+# myComment = {
+#     'usuario': 'idUsuario',
+#     'fecha': 'nov 10 2020',
+#     'estrellas': 'comentario1',
+#     'upvotes': '1',
+#     'chazaId': '23131'
+# }
 
-r = requests.post(url, json = myComment)
-print(r.text)
+# r = requests.post(url, json = myComment)
+# print(r.text)
 
 # r = requests.post(url, json = myobj)
 # print(r.text)
 
 # r = requests.post("http://127.0.0.1:5000/chaza/list")
 # print(r.json())
+
+
+
+
