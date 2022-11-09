@@ -33,3 +33,17 @@ def getReportSummary(id=None):
         return f'{selected_report.to_dict()}'
     else:
         return 'The selected report does not exist'
+
+@reporteAPI.route('/resolve/<id>', methods=['POST'])
+def resolveReport(id):
+    ''' Marks a given report as resolved
+
+    Args:
+        id: Firestone database report id
+    '''
+    selected_report = db.collection('reporte').document(id)
+    if selected_report.get().exists:
+        selected_report.update({"estado_resuelto": "true"})
+        return jsonify({"success": True}), 200
+    else:
+        return 'The selected report does not exist'

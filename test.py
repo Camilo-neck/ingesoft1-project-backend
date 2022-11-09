@@ -84,5 +84,21 @@ def getReportSummary(id):
     r = requests.get(url)
     print(r.text)
 
+
+def resolveReport(id):
+    '''Resolve a given report
+    
+    Args:
+        id: Firestone report id
+    '''
+
+    # Flask view URL
+    url = "http://localhost:5000/reporte/resolve/" + str(id)
+
+    r = requests.post(url)  # Modify database
+    print(r.text)  # Get success or error message
+
+    
+
 '''Code execution section'''
-getReportSummary('21190da6fccd4671b2675b60774d4c1f')
+resolveReport('21190da6fccd4671b2675b60774d4c1f')

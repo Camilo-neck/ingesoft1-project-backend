@@ -28,9 +28,9 @@ def increaseUpvotes(id=None):
     selected_comment = db.collection('comentario').document(id)
     if selected_comment.get().exists:
         selected_comment.update({'upvotes': firestore.Increment(1)})
+        return jsonify({"success": True}), 200
     else:
-        print('The selected comment does not exist')
-    return '' # Dummy return which must be changed
+        return 'The selected comment does not exist'
 
 
 @comentarioAPI.route('/<id>', methods=['GET'])
