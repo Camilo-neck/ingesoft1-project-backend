@@ -56,6 +56,22 @@ def createChaza():
     print(r.text)  # Get success or error message
     
 
+def createReport():
+    ''' Create new comment in database with dummy data'''
+
+     # Flask view URL
+    url = "http://localhost:5000/reporte/add"
+
+    # JSON object to be added
+    newReport = {
+        "contenido": "La comida es peligrosa",
+        "fecha": "nov 12 2021",
+        "estado_resuelto": "false"
+    }
+
+    r = requests.post(url, json = newReport)  # Add it to database
+    print(r.text)  # Get success or error message
+
 
 '''Code execution section'''
-getCommentSummary('33aefc97261c483b81fb405a3a0ea611')
+createReport()

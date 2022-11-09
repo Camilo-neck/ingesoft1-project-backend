@@ -19,11 +19,13 @@ def create_app():
     #app.config['SECRET_KEY'] = 
     from .chazaAPI import chazaAPI
     from .comentarioAPI import comentarioAPI
+    from .reporteAPI import reporteAPI
     #from .userAPI import userAPI
 
     # Asigna el blueprint de chaza a la aplicación principal
     app.register_blueprint(chazaAPI, url_prefix="/chaza")
     app.register_blueprint(comentarioAPI, url_prefix="/comentario")
+    app.register_blueprint(reporteAPI, url_prefix="/reporte")
     
 
     @app.route('/')
