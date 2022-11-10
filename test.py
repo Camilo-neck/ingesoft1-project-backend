@@ -64,8 +64,8 @@ def createReport():
 
     # JSON object to be added
     newReport = {
-        "contenido": "La comida es peligrosa",
-        "fecha": "nov 12 2021",
+        "contenido": "La comida es peligrosa y dudosa",
+        "fecha": "nov 1 2021",
         "estado_resuelto": "false"
     }
 
@@ -98,7 +98,16 @@ def resolveReport(id):
     r = requests.post(url)  # Modify database
     print(r.text)  # Get success or error message
 
-    
+
+def getAllUnresolvedReports():
+    '''Gets all the unresolved reports in JSON format'''
+
+    # Flask view URL
+    url = "http://localhost:5000/reporte/getUnresolvedReports"
+    r = requests.get(url)
+    print(r.text)
+
 
 '''Code execution section'''
-resolveReport('21190da6fccd4671b2675b60774d4c1f')
+createReport()
+getAllUnresolvedReports()

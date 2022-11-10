@@ -47,3 +47,17 @@ def resolveReport(id):
         return jsonify({"success": True}), 200
     else:
         return 'The selected report does not exist'
+
+
+@reporteAPI.route('/getUnresolvedReports', methods=['GET'])
+def getUnresolvedReports():
+    '''Gets all the unresolved reports in JSON format'''
+
+    # Database query
+    unresolved_reports = db.collection('reporte').where('estado_resuelto', '==', 'false')
+
+    try:
+        # Return JSON with all matching reports
+        return jsonify([doc.to_dict() for doc in unresolved_reports.stream()]), 200  
+    except Exception as e:
+        return f"An error has ocurred: {e}"
