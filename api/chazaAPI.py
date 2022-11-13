@@ -76,5 +76,7 @@ def summarizeChaza(chaza_doc):
         "nombre" : chaza["nombre"],
         "urlImagen" : chaza["urlImagen"],
         "calificacion" : chaza["calificacion"],
-        "categorias" : chaza["categorias"]
+        "categorias" : chaza["categorias"],
+        "ubicacion" : chaza["ubicacion"],
+        "telefono" : chaza["telefono"]
     }
