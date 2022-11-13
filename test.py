@@ -23,6 +23,14 @@ print(r.text)
 
 # def createComment():
 #     ''' Create new comment in database with dummy data'''
+    # JSON object to be added
+    # newComment = {
+    #     "usuario": "idUsuario",
+    #     "fecha": "feb 14 2022",
+    #     "estrellas": "5",
+    #     "upvotes": "23",
+    #     "chazaId": "2c3318cdb84148eba49b9239b7ed6102"
+    # }
 
 #     # Flask view URL
 #     url = "http://localhost:5000/comentario/add"
@@ -132,3 +140,20 @@ print(r.text)
 # '''Code execution section'''
 # createReport()
 # getAllUnresolvedReports()
+# def getCommentsByChazaID(id):
+#     '''Get all comments related to a Chaza
+
+#     Comments have a 'chazaID' attribute and this function filters by this field.
+    
+#     Args:
+#         id: Given firestone chaza unique id
+#     '''
+#     # Flask view URL
+#     url = "http://localhost:5000/chaza/getChazaComments/" + str(id)
+#     print(url)
+#     r = requests.get(url)
+#     print(r.text)
+
+
+# '''Code execution section'''
+# getCommentsByChazaID("2c3318cdb84148eba49b9239b7ed6102")
