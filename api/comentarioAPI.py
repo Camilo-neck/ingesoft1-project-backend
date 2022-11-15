@@ -18,7 +18,7 @@ def create():
         return f"An error has ocurred: {e}"
 
 
-@comentarioAPI.route('/increaseUpvotes/<id>', methods=['POST'])
+@comentarioAPI.route('/increaseCommentUpvotes/<id>', methods=['POST'])
 def increaseUpvotes(id=None):
     ''' Increases by 1 the comment upvotes given a comment id
 
@@ -28,7 +28,20 @@ def increaseUpvotes(id=None):
     selected_comment = db.collection('comentario').document(id)
     if selected_comment.get().exists:
         selected_comment.update({'upvotes': firestore.Increment(1)})
+        return jsonify({"success": True}), 200
     else:
-        print('The selected comment does not exist')
-    return '' # Dummy return which must be changed
+        return 'The selected comment does not exist'
 
+
+@comentarioAPI.route('/<id>', methods=['GET'])
+def getCommentSummary(id=None):
+    ''' Get .JSON containing all the comment attributes
+
+    Args:
+        id: Firestone database comment id
+    '''
+    selected_comment = db.collection('comentario').document(id).get()
+    if selected_comment.exists:
+        return f'{selected_comment.to_dict()}'
+    else:
+        return 'The selected comment does not exist'
