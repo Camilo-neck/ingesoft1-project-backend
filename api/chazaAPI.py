@@ -35,7 +35,7 @@ def id(id=None):
     chaza_ref = db.collection('chaza').document(id)
     chaza = chaza_ref.get()
     if chaza.exists:
-        return f'{chaza.to_dict()}'
+        return jsonify(chaza.to_dict())
     else:
         return 'La chaza no existe'
 
