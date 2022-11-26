@@ -1,5 +1,34 @@
 import requests
 
+# url = "http://127.0.0.1:5000/usuario/edit/f42c3a0c77b74c32ba4c215c4178dea4"
+# myobj = {
+#     "nombre": "TESTEO USUARIO2",
+#     "tipoUsuario": "Estudiante",
+#     "urlFotoPerfil": "urltest2.com",
+#     "correo": "prueba3@gmail.com",
+#     "password": "1234567"
+# }
+# r = requests.post(url, json = myobj)
+
+# r = requests.get("http://127.0.0.1:5000/usuario/list")
+# print(r.text)
+
+
+# url = "http://127.0.0.1:5000/usuario/add"
+# myobj = {
+#     "nombre": "TESTEO USUARIO2",
+#     "tipoUsuario": "Estudiante",
+#     "urlFotoPerfil": "urltest2.com",
+#     "correo": "prueba2@gmail.com",
+#     "password": "1234567"
+# }
+# r = requests.post(url, json = myobj)
+
+# r = requests.get("http://127.0.0.1:5000/usuario/")
+# print(r.text)
+
+
+
 # url = "http://127.0.0.1:5000/chaza/add"
 # myobj = {
 #     "nombre": "TESTEO CHAZA",
@@ -18,8 +47,8 @@ import requests
 
 # r = requests.post(url, json = myobj)
 # print(r.text)
-r = requests.get("http://127.0.0.1:5000/chaza/")
-print(r.text)
+# r = requests.get("http://127.0.0.1:5000/chaza/")
+# print(r.text)
 
 # def createComment():
 #     ''' Create new comment in database with dummy data'''

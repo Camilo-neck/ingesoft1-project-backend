@@ -31,12 +31,14 @@ def create_app():
     from .chazaAPI import chazaAPI
     from .comentarioAPI import comentarioAPI
     from .reporteAPI import reporteAPI
+    from .usuarioAPI import usuarioAPI
     #from .userAPI import userAPI
 
     # Asigna el blueprint de chaza a la aplicación principal
     app.register_blueprint(chazaAPI, url_prefix="/chaza")
     app.register_blueprint(comentarioAPI, url_prefix="/comentario")
     app.register_blueprint(reporteAPI, url_prefix="/reporte")
+    app.register_blueprint(usuarioAPI, url_prefix="/usuario")
     
 
     @app.route('/')
