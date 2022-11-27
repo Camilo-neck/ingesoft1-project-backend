@@ -22,12 +22,24 @@ def create():
 def edit(id=None):
     usuario_ref = db.collection('usuario').document(id)
     try:
-        usuario_ref.set(request.json)
+        usuario_ref.update(request.json)
         return jsonify({"success": True}), 200
 
     except Exception as e:
         return f"An error has ocurred: {e}"
 
+@usuarioAPI.route('/<id>/newchaza', methods=['POST'])
+def agregarChaza(id=None):
+    chaza_ref = db.collection('chaza')
+    usuario_ref = db.collection('usuario').document(id)
+    try:
+        id_chaza = uuid.uuid4()
+        chaza_ref.document(id_chaza.hex).set(request.json)
+        usuario_ref.update({"chazasPropias": firestore.ArrayUnion([id_chaza.hex])})
+        return jsonify({"success": True}), 200
+
+    except Exception as e:
+        return f"An error has ocurred: {e}"
 
 
 @usuarioAPI.route('/list', methods=['GET'])

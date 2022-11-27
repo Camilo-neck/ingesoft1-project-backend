@@ -1,12 +1,33 @@
 import requests
 
-# url = "http://127.0.0.1:5000/usuario/edit/f42c3a0c77b74c32ba4c215c4178dea4"
+# url = "http://127.0.0.1:5000/usuario/{id_usuario}/newchaza"
 # myobj = {
-#     "nombre": "TESTEO USUARIO2",
-#     "tipoUsuario": "Estudiante",
-#     "urlFotoPerfil": "urltest2.com",
-#     "correo": "prueba3@gmail.com",
-#     "password": "1234567"
+#     "nombre": "Cinnabon",
+#     "categorias": ["Comidas"],
+#     "ubicacion": "Plaza Che",
+#     "descripcion": "",
+#     "urlImagen": "urltest4.com",
+#     "telefono": 117513,
+#     "horario": "13:00 - 18:00",
+#     "propietario": "idPropietario9" ,
+#     "comentarios": ["com1"],
+#     "calificacion": 4,
+#     "urlFotoChaza": "urlFoto3",
+#     "reportes": ["rep1"],
+# }
+# r = requests.post(url, json = myobj)
+
+# r = requests.get("http://127.0.0.1:5000/usuario/list")
+# r = requests.get("http://127.0.0.1:5000/chaza/list")
+# print(r.text)
+
+
+
+
+# url = "http://127.0.0.1:5000/usuario/edit/{id_usuario}"
+# myobj = {
+#     "nombre": "TESTEO USUARIO3",
+#     "correo": "prueba4@gmail.com"
 # }
 # r = requests.post(url, json = myobj)
 
@@ -20,11 +41,12 @@ import requests
 #     "tipoUsuario": "Estudiante",
 #     "urlFotoPerfil": "urltest2.com",
 #     "correo": "prueba2@gmail.com",
-#     "password": "1234567"
+#     "password": "1234567",
+#     "chazasPropias": []
 # }
 # r = requests.post(url, json = myobj)
 
-# r = requests.get("http://127.0.0.1:5000/usuario/")
+# r = requests.get("http://127.0.0.1:5000/usuario/list")
 # print(r.text)
 
 

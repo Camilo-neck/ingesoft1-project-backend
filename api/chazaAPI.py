@@ -6,18 +6,6 @@ db = firestore.client()
 
 chazaAPI = Blueprint("chazaAPI", __name__)
 
-#Agregar chaza por metodo POST
-@chazaAPI.route('/add', methods=['POST'])
-def create():
-    chaza_ref = db.collection('chaza')
-    try:
-        id = uuid.uuid4()
-        chaza_ref.document(id.hex).set(request.json)
-        return jsonify({"success": True}), 200
-
-    except Exception as e:
-        return f"An error has ocurred: {e}"
-
 #Listar todas las chazas en la base de datos
 @chazaAPI.route('/list', methods=['GET'])
 def list():
