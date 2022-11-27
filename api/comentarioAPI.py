@@ -1,6 +1,7 @@
 import uuid
 from flask import Blueprint, request, jsonify
 from firebase_admin import firestore
+from .utils import sentiment_analysis
 
 db = firestore.client()
 
@@ -11,8 +12,12 @@ comentarioAPI = Blueprint("comentarioAPI", __name__)
 def create():
     comentario_ref = db.collection('comentario')
     try:
+        data = request.json
+        # comment_sentiment = sentiment_analysis(data['content'])
+        # data['sentiment'] = comment_sentiment
+        # print(data)
         id = uuid.uuid4()
-        comentario_ref.document(id.hex).set(request.json)
+        comentario_ref.document(id.hex).set(data)
         return jsonify({"success": True}), 200
     except Exception as e:
         return f"An error has ocurred: {e}"
