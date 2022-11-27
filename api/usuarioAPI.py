@@ -34,9 +34,21 @@ def agregarChaza(id_usuario=None):
     usuario_ref = db.collection('usuario').document(id_usuario)
     try:
         id_chaza = uuid.uuid4()
+        #request.json["chazasPropias"].push(id_chaza.hex)
+        request.json["propietario"] = id_usuario
         chaza_ref.document(id_chaza.hex).set(request.json)
         usuario_ref.update({"chazasPropias": firestore.ArrayUnion([id_chaza.hex])})
+        
         return jsonify({"success": True}), 200
+
+    except Exception as e:
+        return f"An error has ocurred: {e}"
+
+@usuarioAPI.route('/<id_usuario>/listchazas', methods=['GET'])
+def listarChazas(id_usuario=None):
+    chaza_ref = db.collection('chaza')
+    try:
+        return jsonify([summarizeChaza(chaza_doc) for chaza_doc in chaza_ref.where('propietario', '==', id_usuario).stream()])
 
     except Exception as e:
         return f"An error has ocurred: {e}"
@@ -61,3 +73,15 @@ def id(id=None):
         return f'{usuario.to_dict()}'
     else:
         return 'El usuario no existe'
+
+def summarizeChaza(chaza_doc):
+    chaza = chaza_doc.to_dict()
+    return {
+        "id" : chaza_doc.id,
+        "nombre" : chaza["nombre"],
+        "urlImagen" : chaza["urlImagen"],
+        "calificacion" : chaza["calificacion"],
+        "categorias" : chaza["categorias"],
+        "ubicacion" : chaza["ubicacion"],
+        "telefono" : chaza["telefono"]
+    }

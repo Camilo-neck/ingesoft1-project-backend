@@ -2,14 +2,13 @@ import requests
 
 # url = "http://127.0.0.1:5000/usuario/{id_usuario}/newchaza"
 # myobj = {
-#     "nombre": "Cinnabon",
+#     "nombre": "Los Tacos",
 #     "categorias": ["Comidas"],
 #     "ubicacion": "Plaza Che",
 #     "descripcion": "",
 #     "urlImagen": "urltest4.com",
 #     "telefono": 117513,
 #     "horario": "13:00 - 18:00",
-#     "propietario": "idPropietario9" ,
 #     "comentarios": ["com1"],
 #     "calificacion": 4,
 #     "urlFotoChaza": "urlFoto3",
