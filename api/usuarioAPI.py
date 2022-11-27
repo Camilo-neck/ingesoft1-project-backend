@@ -28,10 +28,10 @@ def edit(id=None):
     except Exception as e:
         return f"An error has ocurred: {e}"
 
-@usuarioAPI.route('/<id>/newchaza', methods=['POST'])
-def agregarChaza(id=None):
+@usuarioAPI.route('/<id_usuario>/newchaza', methods=['POST'])
+def agregarChaza(id_usuario=None):
     chaza_ref = db.collection('chaza')
-    usuario_ref = db.collection('usuario').document(id)
+    usuario_ref = db.collection('usuario').document(id_usuario)
     try:
         id_chaza = uuid.uuid4()
         chaza_ref.document(id_chaza.hex).set(request.json)
