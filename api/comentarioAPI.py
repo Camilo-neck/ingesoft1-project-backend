@@ -11,13 +11,19 @@ comentarioAPI = Blueprint("comentarioAPI", __name__)
 @comentarioAPI.route('/add', methods=['POST'])
 def create():
     comentario_ref = db.collection('comentario')
+    chazas_ref = db.collection('chaza')
     try:
         data = request.json
-        # comment_sentiment = sentiment_analysis(data['contenido'])
+        comentario = data
+        chaza = data['chazaId']
+        # comment_sentiment = sentiment_analysis(comentario['contenido'])
         # data['sentiment'] = comment_sentiment
         # print(data)
         id = uuid.uuid4()
-        comentario_ref.document(id.hex).set(data)
+        comentario_ref.document(id.hex).set(comentario)
+        chazas_ref.document(chaza).update({
+            'comentarios': firestore.ArrayUnion([id.hex])
+        })
         return jsonify({"success": True}), 200
     except Exception as e:
         return f"An error has ocurred: {e}"
@@ -47,6 +53,6 @@ def getCommentSummary(id=None):
     '''
     selected_comment = db.collection('comentario').document(id).get()
     if selected_comment.exists:
-        return f'{selected_comment.to_dict()}'
+        return jsonify(selected_comment.to_dict())
     else:
         return 'The selected comment does not exist'
