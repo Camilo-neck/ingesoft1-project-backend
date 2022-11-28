@@ -38,9 +38,10 @@ def getRatingByCategory(categoryName=None):
         result_dict[str(i)] = str(len(shops_by_score))
     return 'result_dict'
 
-@chazaAPI.route('/getChazaComments/<chazaID>', methods=['GET'])
-def getChazaComments(chazaID=None):
-    '''Get all comments related to a Chaza
+
+@chazaAPI.route('/getChazaReports/<chazaID>', methods=['GET'])
+def getChazaReports(chazaID=None):
+    '''Get all reports related to a Chaza
 
     Comments have a 'chazaID' attribute and this function filters by this field.
     
@@ -49,11 +50,11 @@ def getChazaComments(chazaID=None):
     '''
 
     # Database query
-    matching_comments = db.collection('comentario').where('chazaId', '==', chazaID)
+    matching_reports = db.collection('reporte').where('chazaID', '==', chazaID)
 
     try:
         # Return JSON with all matching comments
-        return jsonify([doc.to_dict() for doc in matching_comments.stream()]), 200  
+        return jsonify([doc.to_dict() for doc in matching_reports.stream()]), 200  
     except Exception as e:
         return f"An error has ocurred: {e}"
 

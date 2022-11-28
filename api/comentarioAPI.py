@@ -56,3 +56,21 @@ def getCommentSummary(id=None):
         return jsonify(selected_comment.to_dict())
     else:
         return 'The selected comment does not exist'
+
+
+@comentarioAPI.route('/getCommentReports/<commentID>', methods=['GET'])
+def getCommentReports(commentID=None):
+    '''Get all reports related to a comment
+    
+    Args:
+        commentID: Given firestone comment unique id
+    '''
+
+    # Database query
+    matching_reports = db.collection('reporte').where('comentarioID', '==', commentID)
+
+    try:
+        # Return JSON with all matching comments
+        return jsonify([doc.to_dict() for doc in matching_reports.stream()]), 200  
+    except Exception as e:
+        return f"An error has ocurred: {e}"
