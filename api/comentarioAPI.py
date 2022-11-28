@@ -13,7 +13,7 @@ def create():
     comentario_ref = db.collection('comentario')
     try:
         data = request.json
-        # comment_sentiment = sentiment_analysis(data['content'])
+        # comment_sentiment = sentiment_analysis(data['contenido'])
         # data['sentiment'] = comment_sentiment
         # print(data)
         id = uuid.uuid4()
