@@ -28,6 +28,16 @@ def id(id=None):
         return 'La chaza no existe'
 
 
+@chazaAPI.route('/getRatingByCategory/<categoryName>', methods=['GET'])
+def getRatingByCategory(categoryName=None):
+    '''Here goes the code you asked for Nata'''
+    result_dict = dict()
+    for i in range(1, 6):
+        collection = db.collection('chaza').where('categorias', 'array_contains', categoryName).where('calificacion', '==', i)
+        shops_by_score = [shop.to_dict() for shop in collection.stream()]
+        result_dict[str(i)] = str(len(shops_by_score))
+    return 'result_dict'
+
 @chazaAPI.route('/getChazaComments/<chazaID>', methods=['GET'])
 def getChazaComments(chazaID=None):
     '''Get all comments related to a Chaza
