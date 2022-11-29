@@ -11,8 +11,7 @@ usuarioAPI = Blueprint("usuarioAPI", __name__)
 def create():
     usuario_ref = db.collection('usuario')
     try:
-        id = uuid.uuid4()
-        usuario_ref.document(id.hex).set(request.json)
+        usuario_ref.document(request.json['uid']).set(request.json)
         return jsonify({"success": True}), 200
 
     except Exception as e:
@@ -70,9 +69,9 @@ def id(id=None):
     usuario_ref = db.collection('usuario').document(id)
     usuario = usuario_ref.get()
     if usuario.exists:
-        return f'{usuario.to_dict()}'
+        return jsonify(usuario.to_dict()), 200
     else:
-        return 'El usuario no existe'
+        return jsonify({'log' : 'El usuario no existe'}), 404
 
 def summarizeChaza(chaza_doc):
     chaza = chaza_doc.to_dict()
