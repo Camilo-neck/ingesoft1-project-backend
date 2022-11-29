@@ -2,6 +2,7 @@ import uuid
 from flask import Blueprint, request, jsonify
 from firebase_admin import firestore
 from .utils import sentiment_analysis
+from statistics import mean
 
 db = firestore.client()
 
@@ -21,9 +22,15 @@ def create():
         # print(data)
         id = uuid.uuid4()
         comentario_ref.document(id.hex).set(comentario)
+
+        promedio = mean([float(doc.to_dict()["estrellas"]) for doc in comentario_ref.where('chazaId', '==', chaza).stream()].append(comentario))
+
         chazas_ref.document(chaza).update({
-            'comentarios': firestore.ArrayUnion([id.hex])
+            'comentarios': firestore.ArrayUnion([id.hex]),
+            'calificacion' : promedio
         })
+
+
         return jsonify({"success": True}), 200
     except Exception as e:
         return f"An error has ocurred: {e}"
