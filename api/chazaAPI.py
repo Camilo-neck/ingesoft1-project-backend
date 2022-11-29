@@ -38,6 +38,25 @@ def getRatingByCategory(categoryName=None):
         result_dict[str(i)] = str(len(shops_by_score))
     return 'result_dict'
 
+@chazaAPI.route('/getChazaComments/<chazaID>', methods=['GET'])
+def getChazaComments(chazaID=None):
+    '''Get all reports related to a Chaza
+
+    Comments have a 'chazaID' attribute and this function filters by this field.
+    
+    Args:
+        chazaID: Given firestone chaza unique id
+    '''
+
+    # Database query
+    print(chazaID)
+    matching_reports = db.collection('comentario').where('chazaId', '==', chazaID)
+
+    try:
+        # Return JSON with all matching comments
+        return jsonify([doc.to_dict() for doc in matching_reports.stream()]), 200  
+    except Exception as e:
+        return jsonify({'log': f"An error has ocurred: {e}"})
 
 @chazaAPI.route('/getChazaReports/<chazaID>', methods=['GET'])
 def getChazaReports(chazaID=None):
