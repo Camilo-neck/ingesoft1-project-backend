@@ -7,6 +7,10 @@ user_ref = db.collection('user')
 
 userAPI = Blueprint("userAPI", __name__)
 
+@userAPI.route('/', methods=['GET'])
+def users():
+    return jsonify({"si": "nop"})
+
 @userAPI.route('/add', methods=['POST'])
 def create():
     try:
