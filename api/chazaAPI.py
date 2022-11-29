@@ -27,7 +27,7 @@ def id(id=None):
     else:
         return 'La chaza no existe'
 
-
+# For example:   localhost:5000/chaza/getRatingByCategory/Comida
 @chazaAPI.route('/getRatingByCategory/<categoryName>', methods=['GET'])
 def getRatingByCategory(categoryName=None):
     '''Here goes the code you asked for Nata'''
@@ -36,7 +36,10 @@ def getRatingByCategory(categoryName=None):
         collection = db.collection('chaza').where('categorias', 'array_contains', categoryName).where('calificacion', '==', i)
         shops_by_score = [shop.to_dict() for shop in collection.stream()]
         result_dict[str(i)] = str(len(shops_by_score))
-    return 'result_dict'
+    # Convert result dictionary to JSON
+    resp = jsonify(result_dict)
+    resp.status_code = 200
+    return resp
 
 
 @chazaAPI.route('/getChazaReports/<chazaID>', methods=['GET'])
