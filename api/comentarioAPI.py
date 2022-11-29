@@ -23,7 +23,7 @@ def create():
         id = uuid.uuid4()
         comentario_ref.document(id.hex).set(comentario)
 
-        promedio = mean([float(doc.to_dict()["estrellas"]) for doc in comentario_ref.where('chazaId', '==', chaza).stream()].append(comentario))
+        promedio = mean([float(doc.to_dict()["estrellas"]) for doc in comentario_ref.where('chazaId', '==', chaza).stream()].append(comentario["estrellas"]))
 
         chazas_ref.document(chaza).update({
             'comentarios': firestore.ArrayUnion([id.hex]),
