@@ -2,7 +2,7 @@
   "name": "ingesoft1-project-backend",
   "version": 2,
   "builds":[{
-    "src": "main.py",
+    "src": "*.py",
     "use": "@vercel/python"
   }],
   "routes": [{
