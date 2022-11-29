@@ -2,11 +2,11 @@
   "name": "ingesoft1-project-backend",
   "version": 2,
   "builds":[{
-    "src": "./main.py",
-    "use": "@vercel/python"
+    "src": "*.py",
+    "use": "@liudonghua123/now-flask"
   }],
   "routes": [{
     "src": "/(.*)",
-    "dest": "/"
+    "dest": "main.py"
   }]
 }
