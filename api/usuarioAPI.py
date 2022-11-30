@@ -26,6 +26,7 @@ def edit(id=None):
 
     except Exception as e:
         return f"An error has ocurred: {e}"
+        
 
 @usuarioAPI.route('/<id_usuario>/newchaza', methods=['POST'])
 def agregarChaza(id_usuario=None):
@@ -34,7 +35,7 @@ def agregarChaza(id_usuario=None):
     try:
         id_chaza = uuid.uuid4()
         #request.json["chazasPropias"].push(id_chaza.hex)
-        request.json["propietario"] = id_usuario
+        # request.json["propietario"] = id_usuario
         chaza_ref.document(id_chaza.hex).set(request.json)
         usuario_ref.update({"chazasPropias": firestore.ArrayUnion([id_chaza.hex])})
         
