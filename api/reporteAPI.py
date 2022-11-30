@@ -58,7 +58,13 @@ def getUnresolvedReports():
 
     try:
         # Return JSON with all matching reports
-        return jsonify([doc.to_dict() for doc in unresolved_reports.stream()]), 200  
+        unresolved = []
+        for doc in unresolved_reports.stream():
+            d_dict = doc.to_dict()
+            d_dict["id"] = doc.id
+            unresolved.push(d_dict)
+
+        return jsonify(unresolved), 200  
     except Exception as e:
         return f"An error has ocurred: {e}"
 
