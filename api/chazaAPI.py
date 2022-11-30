@@ -179,7 +179,7 @@ def rating():
         return jsonify(categoryRating), 200
         
     except Exception as e:
-        return f"An error has ocurred: {e}"
+        return jsonify({"log":f"An error has ocurred: {e}"}), 400
 
 def categoryQuery(chaza_ref,category,name):
     if category == "Todas":
