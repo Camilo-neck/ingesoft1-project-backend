@@ -62,7 +62,7 @@ def getUnresolvedReports():
         for doc in unresolved_reports.stream():
             d_dict = doc.to_dict()
             d_dict["id"] = doc.id
-            unresolved.push(d_dict)
+            unresolved.append(d_dict)
 
         return jsonify(unresolved), 200  
     except Exception as e:
