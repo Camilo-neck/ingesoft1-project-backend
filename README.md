@@ -15,5 +15,5 @@ py -m venv env # python -m venv env (solo la primera vez para generar entorno vi
 
 2. Iniciar el servidor
 ```bash
-py app.py
+py main.py
 ```
