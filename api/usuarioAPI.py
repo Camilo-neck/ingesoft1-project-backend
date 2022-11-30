@@ -26,30 +26,7 @@ def edit(id=None):
 
     except Exception as e:
         return f"An error has ocurred: {e}"
-
-@usuarioAPI.route('/eraseuser/<id>', methods=['POST'])
-def eraseUser(id=None):
-    usuario_ref = db.collection('usuario').document(id)
-    try:
-        usuario_ref.delete()
-        return jsonify({"success": True}), 200
-
-    except Exception as e:
-        return f"An error has ocurred: {e}"
-
-
-@usuarioAPI.route('/erasechaza/<id_usuario>/<id_chaza>', methods=['POST'])
-def eraseChaza(id_usuario=None, id_chaza=None):
-    chaza_ref = db.collection('chaza').document(id_chaza)
-    usuario_ref = db.collection('chaza').document(id_usuario)
-    try:
-        usuario_ref.update({"chazasPropias": firestore.ArrayRemove([id_chaza])})
-        chaza_ref.delete()
-        return jsonify({"success": True}), 200
-
-    except Exception as e:
-        return f"An error has ocurred: {e}"
-
+        
 
 @usuarioAPI.route('/<id_usuario>/newchaza', methods=['POST'])
 def agregarChaza(id_usuario=None):
