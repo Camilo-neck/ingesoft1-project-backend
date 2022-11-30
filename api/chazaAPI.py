@@ -1,10 +1,30 @@
 import uuid
 from flask import Blueprint, request, jsonify
 from firebase_admin import firestore
+from statistics import mean
 
 db = firestore.client()
 
 chazaAPI = Blueprint("chazaAPI", __name__)
+
+# @chazaAPI.route('/update', methods=['GET'])
+# def update():
+#     comentario_ref = db.collection('comentario')
+#     chazas_ref = db.collection('chaza')
+
+#     for chaza in chazas_ref.stream():
+
+#         chazaId = chaza.id
+#         estrellas = [float(doc.to_dict()["estrellas"]) for doc in comentario_ref.where('chazaId', '==', chazaId).stream()]
+#         if len(estrellas) == 0: promedio = 0 
+#         else: promedio = mean(estrellas)
+
+#         chazas_ref.document(chazaId).update({
+#             'calificacion' : promedio
+#         })
+#         print(promedio, chazaId)
+#     return "YES", 200
+    
 
 #Listar todas las chazas en la base de datos
 @chazaAPI.route('/list', methods=['GET'])
@@ -53,13 +73,20 @@ def getChazaReports(chazaID=None):
     '''
 
     # Database query
-    matching_comments = db.collection('reporte').where('chazaID', '==', chazaID)
+    reports_ref  = db.collection('reporte')
+
+    user_ref = db.collection('usuario')
+
+    all_users = {}
+    for doc in user_ref.stream():
+        usr = doc.to_dict()
+        all_users[doc.id] = usr
 
     try:
-        # Return JSON with all matching comments
-        return jsonify([doc.to_dict() for doc in matching_comments.stream()]), 200  
+        # Return JSON with all matching reports
+        return jsonify([addUser(report_doc, all_users) for report_doc in reports_ref.where('chazaId', '==', chazaID).stream()]), 200
     except Exception as e:
-        return f"An error has ocurred: {e}"
+        return jsonify({'log': f"An error has ocurred: {e}"})
 
 @chazaAPI.route('/getChazaComments/<chazaID>', methods=['GET'])
 def getChazaComments(chazaID=None):
@@ -72,7 +99,6 @@ def getChazaComments(chazaID=None):
     '''
 
     # Database query
-    print(chazaID)
     comments_ref  = db.collection('comentario')
     user_ref = db.collection('usuario')
 
@@ -80,10 +106,11 @@ def getChazaComments(chazaID=None):
     for doc in user_ref.stream():
         usr = doc.to_dict()
         all_users[doc.id] = usr
-    return jsonify([addUserToComment(comment_doc,all_users) for comment_doc in comments_ref.where('chazaId', '==', chazaID).stream()]), 200
+
+
     try:
         # Return JSON with all matching comments
-        return jsonify([addUserToComment(comment_doc,all_users) for comment_doc in comments_ref.where('chazaId', '==', chazaID).stream()]), 200
+        return jsonify([addUser(comment_doc, all_users) for comment_doc in comments_ref.where('chazaId', '==', chazaID).stream()]), 200
     except Exception as e:
         return jsonify({'log': f"An error has ocurred: {e}"})
 
@@ -102,6 +129,43 @@ def search():
         category_chazas = categoryQuery(chaza_ref,category,name)
         return jsonify(category_chazas), 200
 
+    except Exception as e:
+        return f"An error has ocurred: {e}"
+
+#estadisticas de rating
+@chazaAPI.route('/rating', methods=['GET'])
+def rating():
+    chaza_ref = db.collection('chaza')
+    categoryRating = []
+
+    categories = ["Mercado", "Vivero", "Comida", "Comidas rapidas", "Ropa", "Bisuteria", "Papeleria", "Dulces", "Otros"]
+    for category in categories:
+
+        categoryRating.append({
+            "tipo" : category,
+            "4-5 estrellas": 0,
+            "3-4 estrellas": 0,
+            "2-3 estrellas": 0,
+            "1-2 estrellas": 0,
+            "0-1 estrellas": 0
+         })
+
+    try:
+    
+        for doc in chaza_ref.stream():
+            chaza = doc.to_dict()
+            rate = float(chaza["calificacion"])
+
+            for cat in chaza["categorias"]: 
+                if rate>4 and rate <=5: categoryRating[categories.index(cat)]["4-5 estrellas"] +=1; continue
+                if rate>3 and rate <=4: categoryRating[categories.index(cat)]["3-4 estrellas"] +=1; continue
+                if rate>2 and rate <=3: categoryRating[categories.index(cat)]["2-3 estrellas"] +=1; continue
+                if rate>1 and rate <=2: categoryRating[categories.index(cat)]["1-2 estrellas"] +=1; continue
+                categoryRating[categories.index(cat)]["0-1 estrellas"] +=1
+            
+
+        return jsonify(categoryRating), 200
+        
     except Exception as e:
         return f"An error has ocurred: {e}"
 
@@ -129,17 +193,16 @@ def summarizeChaza(chaza_doc):
         "telefono" : chaza["telefono"]
     }
 
-
-def addUserToComment(comment_doc, all_users):
-    comment = comment_doc.to_dict()
-    user_id = comment["usuario"]
-    #owner = user_ref.document(user_id).get().to_dict()
-    if user_id not in all_users.keys(): return comment
+#Agregar info basica de usuario a comentario/reporte 
+def addUser(document, all_users):
+    d_doc = document.to_dict()
+    user_id = d_doc["usuario"]
+    if user_id not in all_users.keys(): return d_doc
     owner = all_users[user_id]
-    print(owner)
-    comment["usuario"] = {
+
+    d_doc["usuario"] = {
         "id" : user_id,
         "urlFotoPerfil" : owner["urlFotoPerfil"],
         "nombre" : owner["nombre"]
     }
-    return comment
+    return d_doc
