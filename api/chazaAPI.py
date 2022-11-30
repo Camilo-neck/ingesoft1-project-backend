@@ -62,6 +62,18 @@ def getRatingByCategory(categoryName=None):
     return resp
 
 
+@usuarioAPI.route('/edit/<id>', methods=['POST'])
+def edit(id=None):
+    chaza_ref = db.collection('chaza').document(id)
+    try:
+        chaza_ref.update(request.json)
+        return jsonify({"success": True}), 200
+
+    except Exception as e:
+        return f"An error has ocurred: {e}"
+
+
+
 @chazaAPI.route('/getChazaReports/<chazaID>', methods=['GET'])
 def getChazaReports(chazaID=None):
     '''Get all reports related to a Chaza
