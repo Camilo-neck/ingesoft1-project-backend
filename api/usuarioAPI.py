@@ -26,6 +26,7 @@ def edit(id=None):
 
     except Exception as e:
         return f"An error has ocurred: {e}"
+        
 
 @usuarioAPI.route('/<id_usuario>/newchaza', methods=['POST'])
 def agregarChaza(id_usuario=None):
