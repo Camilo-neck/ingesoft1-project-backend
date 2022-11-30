@@ -69,6 +69,20 @@ def getCommentSummary(id=None):
     else:
         return 'The selected comment does not exist'
 
+@comentarioAPI.route('/delete/<id>', methods=['GET'])
+def deleteComment(id=None):
+    '''Delete a comment given its id
+    
+    i.e : localhost:5000/comentario/delete/c3fe24df5a6d4bdbb8f3e33af21183bf
+    where c3fe24df5a6d4bdbb8f3e33af21183bf is the id of the comment
+
+    '''
+    try:
+        db.collection('comentario').document(id).delete()
+        return jsonify({"success": True}), 200
+    except Exception as e:
+        return f"An error has ocurred: {e}"
+
 
 @comentarioAPI.route('/getCommentReports/<commentID>', methods=['GET'])
 def getCommentReports(commentID=None):
