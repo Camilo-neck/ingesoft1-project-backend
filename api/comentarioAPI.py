@@ -77,8 +77,12 @@ def deleteComment(id=None):
     where c3fe24df5a6d4bdbb8f3e33af21183bf is the id of the comment
 
     '''
+    comment_ref = db.collection('comentario').document(id)
+    chaza_id = comment_ref.get().to_dict()['chazaId']
+    chaza_ref = db.collection('chaza').document(chaza_id)
     try:
-        db.collection('comentario').document(id).delete()
+        chaza_ref.update({"comentarios": firestore.ArrayRemove([chaza_id])})
+        comment_ref.delete()
         return jsonify({"success": True}), 200
     except Exception as e:
         return f"An error has ocurred: {e}"
