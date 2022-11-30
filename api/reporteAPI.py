@@ -61,3 +61,17 @@ def getUnresolvedReports():
         return jsonify([doc.to_dict() for doc in unresolved_reports.stream()]), 200  
     except Exception as e:
         return f"An error has ocurred: {e}"
+
+@reporteAPI.route('/delete/<id>', methods=['GET'])
+def deleteReport(id=None):
+    '''Delete a report given its id
+    
+    i.e : localhost:5000/report/delete/61e298308ba74f3e8bedf5e7fa9a0789
+    where 61e298308ba74f3e8bedf5e7fa9a0789 is the id of the comment
+
+    '''
+    try:
+        db.collection('reporte').document(id).delete()
+        return jsonify({"success": True}), 200
+    except Exception as e:
+        return f"An error has ocurred: {e}"
