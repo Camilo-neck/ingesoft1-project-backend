@@ -199,6 +199,7 @@ def summarizeChaza(chaza_doc):
         "id" : chaza_doc.id,
         "nombre" : chaza["nombre"],
         "urlImagen" : chaza["urlImagen"],
+        "urlFotoChaza" : chaza["urlFotoChaza"],
         "calificacion" : chaza["calificacion"],
         "categorias" : chaza["categorias"],
         "ubicacion" : chaza["ubicacion"],
