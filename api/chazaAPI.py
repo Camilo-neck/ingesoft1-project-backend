@@ -200,6 +200,7 @@ def addUser(document, all_users):
     if user_id not in all_users.keys(): return d_doc
     owner = all_users[user_id]
 
+    d_doc["id"] = d_doc.id
     d_doc["usuario"] = {
         "id" : user_id,
         "urlFotoPerfil" : owner["urlFotoPerfil"],
