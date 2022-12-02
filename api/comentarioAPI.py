@@ -38,7 +38,7 @@ def create():
 
         return jsonify({"success": True, "comment": comentario}), 200
     except Exception as e:
-        return jsonify({"log": f"An error has ocurred: {e}"}), 400
+        return jsonify({"log": f"An error has ocurred: {e}"})
 
 
 @comentarioAPI.route('/increaseCommentUpvotes/<id>', methods=['POST'])
