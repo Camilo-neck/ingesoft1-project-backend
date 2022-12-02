@@ -17,9 +17,9 @@ def create():
         data = request.json
         comentario = data
         chazaId = data['chazaId']
-        comment_sentiment = sentiment_analysis(comentario['contenido'])
-        comentario['sentiment'] = comment_sentiment
-        print("data:", comentario)
+        # comment_sentiment = sentiment_analysis(comentario['contenido'])
+        # comentario['sentiment'] = comment_sentiment
+        # print("data:", comentario)
         id = uuid.uuid4()
         comentario_ref.document(id.hex).set(comentario)
         if comentario["estrellas"] == None: comentario["estrellas"] = 0
@@ -38,7 +38,7 @@ def create():
 
         return jsonify({"success": True, "comment": data}), 200
     except Exception as e:
-        return jsonify({"log":f"An error has ocurred: {e}"}), 400
+        return jsonify({"log": f"An error has ocurred: {e}"}), 400
 
 
 @comentarioAPI.route('/increaseCommentUpvotes/<id>', methods=['POST'])
