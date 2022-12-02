@@ -18,8 +18,8 @@ def create():
         comentario = data
         chazaId = data['chazaId']
         comment_sentiment = sentiment_analysis(comentario['contenido'])
-        data['sentiment'] = comment_sentiment
-        print("data:", data)
+        comentario['sentiment'] = comment_sentiment
+        print("data:", comentario)
         id = uuid.uuid4()
         comentario_ref.document(id.hex).set(comentario)
         if comentario["estrellas"] == None: comentario["estrellas"] = 0
@@ -36,7 +36,7 @@ def create():
             'calificacion' : promedio
         })
 
-        return jsonify({"success": True}), 200
+        return jsonify({"success": True, "comment": data}), 200
     except Exception as e:
         return f"An error has ocurred: {e}"
 
