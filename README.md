@@ -1,7 +1,7 @@
 # ingesoft1-project-backend
 
 Para ejecutar el servidor:
-1. Instalar dependencias
+## 1. Instalar dependencias
 ```bash
 pip install -r requirements.txt
 ```
@@ -13,7 +13,7 @@ py -m venv env # python -m venv env (solo la primera vez para generar entorno vi
 .\env\Scripts\Activate.bat # Para iniciar el entorno virtual
 ```
 
-2. Iniciar el servidor
+## 2. Iniciar el servidor
 ```bash
 py main.py
 ```
